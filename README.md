@@ -1,54 +1,10 @@
-
-# Heart Rate–Based Exercise Intensity Monitor
-
-A wearable device that measures heart rate using a **PPG sensor** and estimates exercise intensity using the **Karvonen formula**.
-
-This system integrates **Arduino, PPG sensor, Bluetooth communication, and a mobile application** to provide real-time exercise intensity monitoring.
-
----
-
-## Device Overview
-
-![device](images/device_photo.jpg)
-
-The prototype device includes:
-
-- PPG heart rate sensor
-- Arduino microcontroller
-- Bluetooth communication module
-- Battery power supply
-- Wearable enclosure (3D printed)
-
----
-
-## Circuit Connection
-
-![circuit](images/circuit_connection.jpg)
-
-The PPG sensor detects blood volume changes in the skin and sends signals to the Arduino for heart rate calculation.
-
----
-
-## System Architecture
-
-
----
-
-## Hardware Components
-
-| Component | Description |
-|---|---|
-| Arduino Uno | Microcontroller for signal processing |
-| PPG Sensor (MAX30102 / Pulse Sensor) | Heart rate detection |
-| HC-06 Bluetooth Module | Wireless communication |
-| Battery Module | Portable power supply |
-| Jumper Wires | Circuit connection |
-
 ---
 
 ## Exercise Intensity Calculation
 
-### Karvonen Formula
+### Karvonen Formula (카보넨 공식)
+
+This system calculates exercise intensity using the **Karvonen Formula**, which determines a personalized target heart rate.
 
 ![formula](https://latex.codecogs.com/png.image?\dpi{120}THR=(HR_{max}-HR_{rest})\times Intensity+HR_{rest})
 
@@ -58,69 +14,65 @@ Where
 - **HRrest** = resting heart rate  
 - **Intensity** = desired exercise intensity level  
 
-### Exercise Intensity Zones
-
-| Intensity | Training Goal |
-|---|---|
-| 50–60% | Light activity |
-| 60–70% | Fat burning |
-| 70–85% | Cardiovascular training |
-
-This method enables **personalized exercise intensity calculation based on heart rate**.
+The Karvonen formula allows exercise intensity to be adjusted based on **individual physical condition and training goals**.
 
 ---
 
-## 3D Model Design
+## Exercise Intensity Levels
 
-![3D model](images/device_render.png)
+The system divides exercise intensity into **four levels**.
 
-The enclosure was designed using **Autodesk Inventor** and manufactured using **3D printing**.
-
----
-
-## Features
-
-- Real-time heart rate monitoring
-- Personalized exercise intensity calculation
-- Bluetooth communication with mobile application
-- Wearable device design
+| Level | Intensity Range | Purpose |
+|---|---|---|
+| Level 1 | 50–60% | Rehabilitation / Light activity |
+| Level 2 | 60–70% | Fat burning |
+| Level 3 | 70–80% | Cardiovascular endurance |
+| Level 4 | 80–90% | High-intensity training |
 
 ---
 
-## Mobile Application
+## Personalized Exercise Recommendation
 
-The mobile application displays:
+Exercise intensity can be adjusted according to the **user's physical condition and training goals**.
 
-- Real-time BPM
-- Target heart rate
-- Exercise intensity zone
+### Patient / Rehabilitation
 
----
+Recommended intensity:
 
-## Future Improvements
+**Level 1 (50–60%)**
 
-- Motion artifact filtering
-- Integration with **SpO₂ measurement**
-- Smaller microcontroller (Arduino Nano)
-- Data logging and exercise analysis
-- Improved mobile application UI
+Used for
+
+- rehabilitation
+- recovery training
+- elderly users
 
 ---
 
-## Project Structure
+### General Users
+
+Recommended intensity:
+
+**Level 2 (60–70%)**
+
+Used for
+
+- fat burning
+- general health management
 
 ---
 
-## Authors
+### Athletes
 
-**Junha Jung**  
-**Gyuseok Hwang**
+Recommended intensity:
 
-Medical Convergence Engineering
+**Level 3–4 (70–90%)**
+
+Used for
+
+- endurance training
+- high-intensity performance training
+
+Therefore, the system can **assign exercise intensity according to health status, fitness level, and exercise objectives**.
 
 ---
-
-## License
-
-This project is developed for **academic research and educational purposes**.
-
