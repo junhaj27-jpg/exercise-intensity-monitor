@@ -15,6 +15,9 @@ The prototype device integrates a PPG heart rate sensor, Arduino microcontroller
 ## Circuit Connection
 
 ![Circuit](images/circuit_connection.jpg)
+<img width="473" height="636" alt="image" src="https://github.com/user-attachments/assets/43e21d11-3517-4839-8014-eccaf96a4024" />
+
+
 
 The circuit connects the PPG sensor to the Arduino for heart rate signal acquisition and processing.
 
