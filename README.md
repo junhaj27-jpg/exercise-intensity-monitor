@@ -1,24 +1,95 @@
+# Heart Rate–Based Exercise Intensity Monitor
+
+A wearable system that measures heart rate using a **PPG sensor** and estimates exercise intensity using the **Karvonen Formula (카보넨 공식)**.
+
+The system integrates an **Arduino microcontroller, PPG sensor, Bluetooth communication module, and mobile application** to provide real-time heart rate monitoring and personalized exercise intensity recommendations.
+
 ---
 
-## Exercise Intensity Calculation
+# Project Overview
 
-### Karvonen Formula (카보넨 공식)
+Maintaining an appropriate exercise intensity is important for achieving different fitness goals such as rehabilitation, fat burning, cardiovascular endurance, and athletic performance.
 
-This system calculates exercise intensity using the **Karvonen Formula**, which determines a personalized target heart rate.
+This project measures heart rate using a **PPG sensor** and calculates a **target heart rate using the Karvonen formula**.
 
-![formula](https://latex.codecogs.com/png.image?\dpi{120}THR=(HR_{max}-HR_{rest})\times Intensity+HR_{rest})
+The calculated heart rate and exercise intensity level are transmitted via **Bluetooth** and displayed on a **mobile application**.
+
+---
+
+# Device Overview
+
+![device](images/device_photo.jpg)
+
+The prototype device consists of:
+
+- PPG heart rate sensor
+- Arduino microcontroller
+- Bluetooth communication module
+- Battery module
+- Wearable enclosure (3D printed)
+
+---
+
+# Circuit Connection
+
+![circuit](images/circuit_connection.jpg)
+
+The PPG sensor detects blood volume changes in the skin and converts them into electrical signals.
+
+The Arduino processes these signals to calculate **heart rate in BPM (Beats Per Minute)**.
+
+---
+
+# PPG Sensor Principle
+
+Photoplethysmography (PPG) is an optical measurement technique used to detect blood volume changes in microvascular tissue.
+
+The PPG sensor works by:
+
+1. Emitting light into the skin  
+2. Detecting reflected light from blood vessels  
+3. Measuring periodic changes caused by heartbeats  
+
+These signals are used to calculate **heart rate**.
+
+---
+
+# System Architecture
+
+  
+---
+
+# Hardware Components
+
+| Component | Description |
+|---|---|
+| Arduino Uno | Microcontroller for signal processing |
+| MAX30102 / Pulse Sensor | Heart rate detection |
+| HC-06 Bluetooth Module | Wireless communication |
+| Battery Module | Portable power supply |
+| Jumper Wires | Circuit connection |
+
+---
+
+# Exercise Intensity Calculation
+
+## Karvonen Formula (카보넨 공식)
+
+Exercise intensity is calculated using the **Karvonen Formula**, which determines a personalized target heart rate.
+
+Target HR = (HRmax − HRrest) × Intensity + HRrest
 
 Where
 
 - **HRmax** = 220 − age  
 - **HRrest** = resting heart rate  
-- **Intensity** = desired exercise intensity level  
+- **Intensity** = exercise intensity level  
 
-The Karvonen formula allows exercise intensity to be adjusted based on **individual physical condition and training goals**.
+The Karvonen formula enables personalized exercise intensity based on individual physical condition.
 
 ---
 
-## Exercise Intensity Levels
+# Exercise Intensity Levels
 
 The system divides exercise intensity into **four levels**.
 
@@ -27,25 +98,25 @@ The system divides exercise intensity into **four levels**.
 | Level 1 | 50–60% | Rehabilitation / Light activity |
 | Level 2 | 60–70% | Fat burning |
 | Level 3 | 70–80% | Cardiovascular endurance |
-| Level 4 | 80–90% | High-intensity training |
+| Level 4 | 80–90% | High intensity training |
 
 ---
 
-## Personalized Exercise Recommendation
+# Personalized Exercise Recommendation
 
-Exercise intensity can be adjusted according to the **user's physical condition and training goals**.
+The exercise intensity can be adjusted according to the user's physical condition.
 
 ### Patient / Rehabilitation
 
 Recommended intensity:
 
-**Level 1 (50–60%)**
+50–60%
 
-Used for
+Used for:
 
 - rehabilitation
 - recovery training
-- elderly users
+- elderly patients
 
 ---
 
@@ -53,12 +124,12 @@ Used for
 
 Recommended intensity:
 
-**Level 2 (60–70%)**
+60–70%
 
-Used for
+Used for:
 
 - fat burning
-- general health management
+- general fitness
 
 ---
 
@@ -66,13 +137,33 @@ Used for
 
 Recommended intensity:
 
-**Level 3–4 (70–90%)**
+70–90%
 
-Used for
+Used for:
 
 - endurance training
-- high-intensity performance training
-
-Therefore, the system can **assign exercise intensity according to health status, fitness level, and exercise objectives**.
+- performance improvement
 
 ---
+
+# Exercise Intensity Algorithm
+
+The system calculates exercise intensity using the following process.
+
+
+---
+
+# Arduino Code Explanation
+
+The Arduino performs the following tasks:
+
+### 1. Sensor Data Acquisition
+
+The PPG sensor measures blood flow signals.
+
+### 2. Heart Rate Calculation
+
+The Arduino calculates **BPM (Beats Per Minute)** from the PPG signal.
+
+Example formula:
+
