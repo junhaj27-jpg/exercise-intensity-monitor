@@ -1,58 +1,173 @@
-# Heart Rate–Based Exercise Intensity Monitor
+Heart Rate–Based Exercise Intensity Monitor
 
-A wearable system that measures heart rate using a PPG sensor and estimates exercise intensity using the Karvonen formula.
+A wearable device that measures heart rate using a PPG sensor and estimates exercise intensity using the Karvonen formula.
 
----
+Project Overview
 
-## Device Overview
+This project aims to help users monitor their exercise intensity using heart rate.
 
-![Device](images/device_photo.jpg)
+By measuring heart rate in real time and applying the Karvonen formula, the system calculates a target heart rate zone suitable for the user.
 
-The prototype device integrates a PPG heart rate sensor, Arduino microcontroller, and Bluetooth communication module for real-time monitoring.
+The device integrates a PPG sensor, Arduino microcontroller, and Bluetooth module to transmit heart rate data to a mobile application.
 
----
+The Karvonen formula allows personalized exercise intensity calculation by considering both maximum heart rate and resting heart rate. 
 
-## Circuit Connection
+졸업설계 _수정
 
-![Circuit](images/circuit_connection.jpg)
-<img width="473" height="636" alt="image" src="https://github.com/user-attachments/assets/43e21d11-3517-4839-8014-eccaf96a4024" />
+Device Overview
+
+The prototype device integrates:
+
+PPG heart rate sensor
+
+Arduino microcontroller
+
+Bluetooth communication module
+
+Battery power supply
+
+Wearable enclosure
+
+Circuit Connection
+
+The PPG sensor measures blood flow changes and sends signals to the Arduino for heart rate calculation.
+
+System Workflow
+PPG Sensor
+     ↓
+Heart Rate Detection (BPM)
+     ↓
+Karvonen Formula
+     ↓
+Exercise Intensity Calculation
+     ↓
+Bluetooth Transmission
+     ↓
+Mobile App Display
+Hardware Components
+
+Arduino Uno
+
+PPG Sensor (MAX30102 / Pulse Sensor)
+
+HC-06 Bluetooth Module
+
+Jumper Wires
+
+Battery Module
+
+Exercise Intensity Calculation
+
+Exercise intensity is calculated using the Karvonen formula:
+
+𝑇
+𝑎
+𝑟
+𝑔
+𝑒
+𝑡
+𝐻
+𝑅
+=
+(
+𝐻
+𝑅
+𝑚
+𝑎
+𝑥
+−
+𝐻
+𝑅
+𝑟
+𝑒
+𝑠
+𝑡
+)
+×
+𝐼
+𝑛
+𝑡
+𝑒
+𝑛
+𝑠
+𝑖
+𝑡
+𝑦
++
+𝐻
+𝑅
+𝑟
+𝑒
+𝑠
+𝑡
+TargetHR=(HR
+max
+	​
+
+−HR
+rest
+	​
+
+)×Intensity+HR
+rest
+	​
 
 
+Where
 
-The circuit connects the PPG sensor to the Arduino for heart rate signal acquisition and processing.
+HRmax = 220 − age
 
----
+HRrest = resting heart rate
 
-## 3D Model Design
+Intensity = desired exercise intensity
 
-![3D Model](images/device_render.png)
+Typical exercise zones:
 
-The enclosure was designed using Autodesk Inventor and printed to house the sensor and electronics.
+Intensity	Purpose
+50–60%	Light activity
+60–70%	Fat burning
+70–85%	Cardiovascular training
 
----
+This method allows users to exercise within a personalized heart rate zone. 
 
-## System Workflow
+졸업설계 _수정
 
-PPG Sensor → Heart Rate Detection → Karvonen Formula → Exercise Intensity Output
+3D Model Design
 
----
+The device enclosure was designed using Autodesk Inventor and produced with 3D printing.
 
-## Hardware Components
+Features
 
-- Arduino Uno
-- PPG Sensor (MAX30102 / Pulse Sensor)
-- HC-06 Bluetooth Module
-- Jumper wires
-- Power module
+Real-time heart rate monitoring
 
----
+Personalized exercise intensity calculation
 
-## Exercise Intensity Calculation
+Bluetooth communication with mobile application
 
-Exercise intensity is calculated using the **Karvonen formula**:
+Wearable device design
 
-Target HR = (HRmax − HRrest) × Intensity + HRrest
+Future Improvements
 
----
+Motion artifact filtering
 
-## Repository Structure
+Integration with SpO₂ measurement (MAX30102)
+
+Smaller microcontroller (Arduino Nano)
+
+Improved mobile app UI
+
+Authors
+
+Junha Jung
+Gyuseok Hwang
+
+Medical Convergence Engineering
+
+💡 추천
+
+README에 이것도 추가하면 훨씬 좋아짐
+
+📂 Project Structure
+📱 App Screen
+📊 Heart Rate Graph
+🎥 Demo Video
