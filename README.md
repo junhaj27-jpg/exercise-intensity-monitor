@@ -1,169 +1,222 @@
-# Heart Rate–Based Exercise Intensity Monitor
+# Heart Rate-Based Exercise Intensity Monitor
 
-A wearable system that measures heart rate using a **PPG sensor** and estimates exercise intensity using the **Karvonen Formula (카보넨 공식)**.
+A heart rate monitoring project that uses a **PPG sensor** and **Arduino-based signal processing** to estimate exercise intensity with the **Karvonen Formula (카보넨 공식)**.
 
-The system integrates an **Arduino microcontroller, PPG sensor, Bluetooth communication module, and mobile application** to provide real-time heart rate monitoring and personalized exercise intensity recommendations.
-
----
-
-# Project Overview
-
-Maintaining an appropriate exercise intensity is important for achieving different fitness goals such as rehabilitation, fat burning, cardiovascular endurance, and athletic performance.
-
-This project measures heart rate using a **PPG sensor** and calculates a **target heart rate using the Karvonen formula**.
-
-The calculated heart rate and exercise intensity level are transmitted via **Bluetooth** and displayed on a **mobile application**.
+This repository is centered on the Arduino pulse-sensor implementation and supporting reference assets. It documents how heart rate data can be measured, interpreted, and mapped to practical exercise intensity ranges.
 
 ---
 
-# Device Overview
+## Project Overview
 
-![device](images/device_photo.jpg)
+Maintaining the right exercise intensity matters for different goals such as rehabilitation, fat burning, cardiovascular endurance, and athletic performance.
 
-The prototype device consists of:
+This project focuses on:
+
+- measuring heart rate from a PPG sensor
+- calculating BPM from the sensor signal
+- estimating target exercise intensity with the Karvonen formula
+- organizing the Arduino-side implementation and reference material in one place
+
+---
+
+## Repository Structure
+
+```text
+exercise-intensity-monitor/
+├─ README.md
+└─ PulseSensor_Amped_Arduino-master/
+   ├─ README.md
+   ├─ video-still.png
+   ├─ pics/
+   └─ PulseSensorAmped_Arduino_1.5.0/
+      ├─ PulseSensorAmped_Arduino_1.5.0.ino
+      ├─ AllSerialHandling.ino
+      ├─ Interrupt.ino
+      └─ Timer_Interrupt_Notes.ino
+```
+
+---
+
+## Device Overview
+
+![Pulse sensor device reference](PulseSensor_Amped_Arduino-master/video-still.png)
+
+The prototype concept is built around the following hardware:
 
 - PPG heart rate sensor
 - Arduino microcontroller
 - Bluetooth communication module
-- Battery module
-- Wearable enclosure (3D printed)
+- portable power supply
+- wearable or handheld enclosure
 
 ---
 
-# Circuit Connection
+## Circuit Connection
 
-![circuit](images/circuit_connection.jpg)
+![Pulse sensor cable hookup](PulseSensor_Amped_Arduino-master/pics/cablehookup.png)
 
 The PPG sensor detects blood volume changes in the skin and converts them into electrical signals.
 
-The Arduino processes these signals to calculate **heart rate in BPM (Beats Per Minute)**.
+The Arduino samples the analog signal, detects beats, and calculates **BPM (Beats Per Minute)** from the measured pulse intervals.
 
 ---
 
-# PPG Sensor Principle
+## PPG Sensor Principle
 
-Photoplethysmography (PPG) is an optical measurement technique used to detect blood volume changes in microvascular tissue.
+Photoplethysmography (PPG) is an optical measurement technique used to detect changes in blood volume in microvascular tissue.
 
-The PPG sensor works by:
+The sensor works by:
 
-1. Emitting light into the skin  
-2. Detecting reflected light from blood vessels  
-3. Measuring periodic changes caused by heartbeats  
+1. emitting light into the skin  
+2. receiving reflected light from blood vessels  
+3. measuring periodic changes caused by heartbeats  
 
-These signals are used to calculate **heart rate**.
+These periodic changes are then used to estimate heart rate.
 
 ---
 
-# System Architecture
+## System Architecture
 
-  
+```mermaid
+flowchart LR
+    A["PPG Sensor"] --> B["Arduino Signal Sampling"]
+    B --> C["Beat Detection / BPM Calculation"]
+    C --> D["Heart Rate Data"]
+    D --> E["Karvonen Formula"]
+    E --> F["Exercise Intensity Range"]
+    F --> G["User Feedback / Display"]
+```
+
+The current repository mainly contains the **sensor-side Arduino implementation and reference assets**. Display or mobile integration can be connected on top of this flow, but that application layer is not the main implementation stored here.
+
 ---
 
-# Hardware Components
+## Hardware Components
 
 | Component | Description |
 |---|---|
-| Arduino Uno | Microcontroller for signal processing |
-| MAX30102 / Pulse Sensor | Heart rate detection |
-| HC-06 Bluetooth Module | Wireless communication |
+| Arduino Uno | Microcontroller for signal sampling and BPM calculation |
+| Pulse Sensor / MAX30102-class PPG sensor | Heart rate detection |
+| HC-06 Bluetooth Module | Optional wireless transmission |
 | Battery Module | Portable power supply |
 | Jumper Wires | Circuit connection |
 
 ---
 
-# Exercise Intensity Calculation
+## Exercise Intensity Calculation
 
-## Karvonen Formula (카보넨 공식)
+### Karvonen Formula (카보넨 공식)
 
-Exercise intensity is calculated using the **Karvonen Formula**, which determines a personalized target heart rate.
+Exercise intensity is estimated using the **Karvonen Formula**, which calculates a personalized target heart rate based on age, resting heart rate, and training intensity.
 
-Target HR = (HRmax − HRrest) × Intensity + HRrest
+`Target HR = (HRmax − HRrest) × Intensity + HRrest`
 
-Where
+Where:
 
-- **HRmax** = 220 − age  
-- **HRrest** = resting heart rate  
-- **Intensity** = exercise intensity level  
+- **HRmax** = `220 − age`
+- **HRrest** = resting heart rate
+- **Intensity** = target training intensity
 
-The Karvonen formula enables personalized exercise intensity based on individual physical condition.
+This formula is useful because it reflects personal condition more meaningfully than using a fixed heart rate threshold alone.
 
 ---
 
-# Exercise Intensity Levels
+## Exercise Intensity Levels
 
-The system divides exercise intensity into **four levels**.
+The project organizes exercise intensity into four practical ranges.
 
 | Level | Intensity Range | Purpose |
 |---|---|---|
-| Level 1 | 50–60% | Rehabilitation / Light activity |
-| Level 2 | 60–70% | Fat burning |
-| Level 3 | 70–80% | Cardiovascular endurance |
-| Level 4 | 80–90% | High intensity training |
+| Level 1 | 50-60% | Rehabilitation / Light activity |
+| Level 2 | 60-70% | Fat burning / General fitness |
+| Level 3 | 70-80% | Cardiovascular endurance |
+| Level 4 | 80-90% | High intensity training |
 
 ---
 
-# Personalized Exercise Recommendation
+## Personalized Exercise Recommendation
 
-The exercise intensity can be adjusted according to the user's physical condition.
+The recommended range can be adjusted depending on the user.
 
 ### Patient / Rehabilitation
 
-Recommended intensity:
-
-50–60%
-
-Used for:
-
-- rehabilitation
-- recovery training
-- elderly patients
-
----
+- **Recommended range:** 50-60%
+- **Use cases:** recovery training, rehabilitation, elderly users
 
 ### General Users
 
-Recommended intensity:
-
-60–70%
-
-Used for:
-
-- fat burning
-- general fitness
-
----
+- **Recommended range:** 60-70%
+- **Use cases:** fat burning, daily fitness, sustainable cardio
 
 ### Athletes
 
-Recommended intensity:
-
-70–90%
-
-Used for:
-
-- endurance training
-- performance improvement
+- **Recommended range:** 70-90%
+- **Use cases:** endurance training, performance improvement
 
 ---
 
-# Exercise Intensity Algorithm
+## Exercise Intensity Algorithm
 
-The system calculates exercise intensity using the following process.
+```mermaid
+flowchart TD
+    A["Read raw PPG signal"] --> B["Filter / stabilize signal"]
+    B --> C["Detect heartbeat peaks"]
+    C --> D["Calculate IBI and BPM"]
+    D --> E["Collect user inputs: age, resting HR"]
+    E --> F["Apply Karvonen Formula"]
+    F --> G["Classify intensity zone"]
+    G --> H["Display or transmit result"]
+```
 
+In practice, the workflow is:
+
+1. read the raw pulse signal from the sensor
+2. detect heartbeat timing from the waveform
+3. calculate BPM from beat intervals
+4. apply the Karvonen formula with personal inputs
+5. classify the result into an exercise intensity range
 
 ---
 
-# Arduino Code Explanation
+## Arduino Code Explanation
 
-The Arduino performs the following tasks:
+The Arduino-side code in `PulseSensor_Amped_Arduino-master/PulseSensorAmped_Arduino_1.5.0/` handles the main low-level processing.
 
 ### 1. Sensor Data Acquisition
 
-The PPG sensor measures blood flow signals.
+The pulse sensor provides an analog signal that changes with blood flow. The Arduino continuously samples this signal.
 
-### 2. Heart Rate Calculation
+### 2. Beat Detection and BPM Calculation
 
-The Arduino calculates **BPM (Beats Per Minute)** from the PPG signal.
+The code detects pulse peaks and computes:
 
-Example formula:
+- **IBI (Inter-Beat Interval)**: time between beats
+- **BPM (Beats Per Minute)**: heart rate derived from recent intervals
 
+### 3. Serial Output
+
+The measured signal, BPM, and related values can be sent through serial output for debugging, plotting, or downstream use.
+
+### 4. Extension for Exercise Intensity
+
+On top of the measured BPM, exercise intensity can be classified by applying:
+
+- resting heart rate
+- age-based maximum heart rate
+- target intensity ratio
+
+This makes the raw pulse data more meaningful for exercise guidance.
+
+---
+
+## Notes
+
+- The repository currently contains the Arduino pulse-sensor project and documentation assets.
+- Some higher-level features described conceptually, such as app-side presentation, may require additional implementation outside this repository.
+- If you want this page to feel more complete on GitHub, the next best addition would be a real device photo or app screenshot placed in a top-level `images/` folder.
+
+---
+
+## One-Line Summary
+
+> An Arduino-based heart rate monitoring project that uses PPG sensing and the Karvonen formula to estimate exercise intensity ranges.
