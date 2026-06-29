@@ -1,169 +1,255 @@
 # Heart Rate–Based Exercise Intensity Monitor
 
-A wearable system that measures heart rate using a **PPG sensor** and estimates exercise intensity using the **Karvonen Formula (카보넨 공식)**.
+## 심박수 기반 운동강도 모니터링 웨어러블 시스템
 
-The system integrates an **Arduino microcontroller, PPG sensor, Bluetooth communication module, and mobile application** to provide real-time heart rate monitoring and personalized exercise intensity recommendations.
+본 프로젝트는 PPG 센서를 이용해 사용자의 심박수를 측정하고, 카보넨 공식(Karvonen Formula)을 기반으로 개인 맞춤형 운동강도를 계산하는 웨어러블 헬스케어 프로토타입입니다.
 
----
-
-# Project Overview
-
-Maintaining an appropriate exercise intensity is important for achieving different fitness goals such as rehabilitation, fat burning, cardiovascular endurance, and athletic performance.
-
-This project measures heart rate using a **PPG sensor** and calculates a **target heart rate using the Karvonen formula**.
-
-The calculated heart rate and exercise intensity level are transmitted via **Bluetooth** and displayed on a **mobile application**.
+Arduino 마이크로컨트롤러, PPG 심박 센서, Bluetooth 통신 모듈, 모바일 애플리케이션을 연동하여 실시간 심박수 측정과 운동강도 안내 기능을 제공합니다.
 
 ---
 
-# Device Overview
+## 1. 프로젝트 개요
 
-![device](images/device_photo.jpg)
+운동 목적에 따라 적절한 운동강도를 유지하는 것은 매우 중요합니다.
 
-The prototype device consists of:
+재활 운동, 지방 연소, 심폐지구력 향상, 고강도 훈련 등은 각각 적절한 심박수 범위가 다르기 때문에 사용자의 신체 상태를 반영한 운동강도 계산이 필요합니다.
 
-- PPG heart rate sensor
-- Arduino microcontroller
-- Bluetooth communication module
-- Battery module
-- Wearable enclosure (3D printed)
+본 시스템은 PPG 센서를 통해 심박수를 측정하고, 카보넨 공식을 사용하여 개인별 목표 심박수와 운동강도 수준을 계산합니다.
+
+계산된 심박수와 운동강도 정보는 Bluetooth 통신을 통해 모바일 애플리케이션으로 전송되며, 사용자는 실시간으로 자신의 운동강도를 확인할 수 있습니다.
 
 ---
 
-# Circuit Connection
+## 2. 주요 기능
 
-![circuit](images/circuit_connection.jpg)
-
-The PPG sensor detects blood volume changes in the skin and converts them into electrical signals.
-
-The Arduino processes these signals to calculate **heart rate in BPM (Beats Per Minute)**.
-
----
-
-# PPG Sensor Principle
-
-Photoplethysmography (PPG) is an optical measurement technique used to detect blood volume changes in microvascular tissue.
-
-The PPG sensor works by:
-
-1. Emitting light into the skin  
-2. Detecting reflected light from blood vessels  
-3. Measuring periodic changes caused by heartbeats  
-
-These signals are used to calculate **heart rate**.
+* PPG 센서를 이용한 실시간 심박수 측정
+* Arduino 기반 BPM 계산
+* 카보넨 공식 기반 목표 심박수 산출
+* 운동강도 수준 분류
+* Bluetooth를 통한 모바일 앱 데이터 전송
+* 사용자 유형별 운동강도 추천
+* 웨어러블 형태의 프로토타입 구현
 
 ---
 
-# System Architecture
+## 3. 디바이스 구성
 
-  
----
+프로토타입 디바이스는 다음과 같은 구성요소로 이루어져 있습니다.
 
-# Hardware Components
-
-| Component | Description |
-|---|---|
-| Arduino Uno | Microcontroller for signal processing |
-| MAX30102 / Pulse Sensor | Heart rate detection |
-| HC-06 Bluetooth Module | Wireless communication |
-| Battery Module | Portable power supply |
-| Jumper Wires | Circuit connection |
+| 구성요소                    | 설명                            |
+| ----------------------- | ----------------------------- |
+| Arduino Uno             | 센서 신호 처리 및 계산을 담당하는 마이크로컨트롤러  |
+| MAX30102 / Pulse Sensor | PPG 방식의 심박수 측정 센서             |
+| HC-06 Bluetooth Module  | 모바일 앱과 무선 통신을 위한 Bluetooth 모듈 |
+| Battery Module          | 휴대형 전원 공급 장치                  |
+| Jumper Wires            | 회로 연결용 배선                     |
+| 3D Printed Enclosure    | 웨어러블 형태 구현을 위한 외형 케이스         |
 
 ---
 
-# Exercise Intensity Calculation
+## 4. PPG 센서 원리
 
-## Karvonen Formula (카보넨 공식)
+PPG, 즉 광용적맥파는 피부에 빛을 조사한 뒤 혈관에서 반사되는 빛의 변화를 측정하여 혈류량 변화를 감지하는 방식입니다.
 
-Exercise intensity is calculated using the **Karvonen Formula**, which determines a personalized target heart rate.
+심장이 박동할 때마다 혈관 내 혈액량이 주기적으로 변하고, 이 변화는 반사광의 세기 변화로 나타납니다.
 
-Target HR = (HRmax − HRrest) × Intensity + HRrest
-
-Where
-
-- **HRmax** = 220 − age  
-- **HRrest** = resting heart rate  
-- **Intensity** = exercise intensity level  
-
-The Karvonen formula enables personalized exercise intensity based on individual physical condition.
+PPG 센서는 이러한 변화를 전기 신호로 변환하고, Arduino는 신호의 주기성을 분석하여 BPM, 즉 분당 심박수를 계산합니다.
 
 ---
 
-# Exercise Intensity Levels
+## 5. 시스템 구조
 
-The system divides exercise intensity into **four levels**.
-
-| Level | Intensity Range | Purpose |
-|---|---|---|
-| Level 1 | 50–60% | Rehabilitation / Light activity |
-| Level 2 | 60–70% | Fat burning |
-| Level 3 | 70–80% | Cardiovascular endurance |
-| Level 4 | 80–90% | High intensity training |
+```text
+[PPG 심박 센서]
+        ↓
+[Arduino 마이크로컨트롤러]
+        ↓
+[심박수 BPM 계산]
+        ↓
+[카보넨 공식 기반 운동강도 계산]
+        ↓
+[Bluetooth 통신 모듈]
+        ↓
+[모바일 애플리케이션]
+        ↓
+[실시간 심박수 및 운동강도 표시]
+```
 
 ---
 
-# Personalized Exercise Recommendation
+## 6. 운동강도 계산 방식
 
-The exercise intensity can be adjusted according to the user's physical condition.
+본 시스템은 카보넨 공식을 사용하여 개인 맞춤형 목표 심박수를 계산합니다.
 
-### Patient / Rehabilitation
+```text
+목표 심박수 = (최대 심박수 - 안정 시 심박수) × 운동강도 + 안정 시 심박수
+```
 
-Recommended intensity:
+각 요소는 다음과 같습니다.
 
+```text
+최대 심박수 = 220 - 나이
+안정 시 심박수 = 사용자의 평상시 심박수
+운동강도 = 0.5 ~ 0.9 사이의 강도 비율
+```
+
+예시:
+
+```text
+나이: 25세
+안정 시 심박수: 70 BPM
+운동강도: 60%
+
+최대 심박수 = 220 - 25 = 195
+목표 심박수 = (195 - 70) × 0.6 + 70
+목표 심박수 = 145 BPM
+```
+
+---
+
+## 7. 운동강도 단계
+
+| 단계      | 운동강도 범위 | 목적                  |
+| ------- | ------: | ------------------- |
+| Level 1 |  50–60% | 재활 운동 / 저강도 활동      |
+| Level 2 |  60–70% | 지방 연소 / 일반 건강 관리    |
+| Level 3 |  70–80% | 심폐지구력 향상            |
+| Level 4 |  80–90% | 고강도 훈련 / 운동 수행능력 향상 |
+
+---
+
+## 8. 사용자 유형별 추천
+
+### 환자 / 재활 사용자
+
+추천 운동강도:
+
+```text
 50–60%
+```
 
-Used for:
+활용 목적:
 
-- rehabilitation
-- recovery training
-- elderly patients
+* 재활 운동
+* 회복 운동
+* 고령자 저강도 운동
+* 무리하지 않는 운동강도 관리
 
----
+### 일반 사용자
 
-### General Users
+추천 운동강도:
 
-Recommended intensity:
-
+```text
 60–70%
+```
 
-Used for:
+활용 목적:
 
-- fat burning
-- general fitness
+* 지방 연소
+* 체중 관리
+* 일반적인 건강 관리
+* 유산소 운동
 
----
+### 운동선수 / 고강도 훈련 사용자
 
-### Athletes
+추천 운동강도:
 
-Recommended intensity:
-
+```text
 70–90%
+```
 
-Used for:
+활용 목적:
 
-- endurance training
-- performance improvement
-
----
-
-# Exercise Intensity Algorithm
-
-The system calculates exercise intensity using the following process.
-
+* 심폐지구력 향상
+* 고강도 인터벌 훈련
+* 운동 수행능력 향상
 
 ---
 
-# Arduino Code Explanation
+## 9. Arduino 처리 흐름
 
-The Arduino performs the following tasks:
+Arduino는 다음과 같은 순서로 데이터를 처리합니다.
 
-### 1. Sensor Data Acquisition
+1. PPG 센서에서 심박 신호 수집
+2. 신호 변화 감지
+3. 심박수 BPM 계산
+4. 사용자 입력값 기반 목표 심박수 계산
+5. 현재 심박수에 따른 운동강도 단계 분류
+6. Bluetooth를 통해 모바일 앱으로 데이터 전송
 
-The PPG sensor measures blood flow signals.
+---
 
-### 2. Heart Rate Calculation
+## 10. 모바일 앱 표시 정보
 
-The Arduino calculates **BPM (Beats Per Minute)** from the PPG signal.
+모바일 앱에서는 다음 정보를 표시합니다.
 
-Example formula:
+* 현재 심박수
+* 목표 심박수
+* 운동강도 단계
+* 운동 목적
+* 추천 메시지
 
+예시:
+
+```text
+현재 심박수: 145 BPM
+운동강도: Level 2
+목적: 지방 연소
+추천: 현재 운동 강도를 유지하세요.
+```
+
+---
+
+## 11. 기대 효과
+
+본 프로젝트는 단순 심박수 측정을 넘어, 사용자의 신체 조건을 반영한 운동강도 추천을 제공한다는 점에서 의미가 있습니다.
+
+특히 재활 운동, 고령자 운동 관리, 일반 건강관리, 운동 수행능력 향상 등 다양한 상황에 적용할 수 있습니다.
+
+또한 Arduino, 센서, Bluetooth, 모바일 앱을 연동한 구조이기 때문에 헬스케어 IoT 프로토타입으로 확장 가능성이 있습니다.
+
+---
+
+## 12. 한계점
+
+본 프로젝트는 교육용 및 포트폴리오용 프로토타입입니다.
+
+현재 한계점은 다음과 같습니다.
+
+* PPG 센서는 움직임에 따른 노이즈 영향을 받을 수 있음
+* 착용 위치에 따라 심박수 측정 정확도가 달라질 수 있음
+* Bluetooth 통신 거리에 따라 데이터 전송이 불안정할 수 있음
+* 의료기기 인증을 받은 장비가 아니므로 진단 또는 치료 목적으로 사용할 수 없음
+
+---
+
+## 13. 향후 개선 방향
+
+* PPG 신호 노이즈 제거 알고리즘 추가
+* 심박수 이동평균 필터 적용
+* 사용자 프로필 저장 기능 추가
+* 운동 기록 저장 및 그래프 시각화
+* 모바일 앱 UI 개선
+* 배터리 효율 개선
+* 웨어러블 케이스 소형화
+* 재활 운동용 모니터링 기능 확장
+
+---
+
+## 14. 기술 스택
+
+* Arduino
+* C++
+* PPG Sensor
+* HC-06 Bluetooth
+* Mobile Application
+* Wearable Prototype
+* 3D Printed Enclosure
+
+---
+
+## 15. 주의사항
+
+본 프로젝트는 의료 진단 또는 치료 목적의 의료기기가 아닙니다.
+
+교육, 연구, 포트폴리오, 헬스케어 IoT 프로토타입 개발을 목적으로 제작되었습니다.
