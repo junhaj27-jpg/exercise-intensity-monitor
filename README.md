@@ -2,6 +2,31 @@
 
 ## 심박수 기반 운동강도 모니터링 웨어러블 시스템
 
+> Arduino, PPG 센서, Bluetooth, MIT App Inventor를 활용해 심박수 기반 운동강도 모니터링 흐름을 구현한 헬스케어 IoT 포트폴리오 프로젝트입니다.
+
+## Portfolio Summary
+
+| 항목 | 내용 |
+| --- | --- |
+| 프로젝트 유형 | 개인 포트폴리오 / 웨어러블 헬스케어 프로토타입 |
+| 핵심 역할 | 센서 데이터 수집, BPM 계산, Bluetooth 전송, 모바일 앱 연동 |
+| 주요 기술 | Arduino, C/C++, PPG Sensor, HC-06 Bluetooth, MIT App Inventor |
+| 구현 범위 | 심박수 측정, 운동강도 분류, LED 상태 표시, 앱 화면 연동 |
+| App Inventor | [프로젝트 페이지 열기](https://ai2a.appinventor.mit.edu/?locale=ko_KR#7773550) |
+
+## 내가 구현한 부분
+
+* Arduino 기반 PPG 심박 센서 데이터 수집
+* BPM 계산 및 Serial/Bluetooth 출력 흐름 구성
+* HC-06 Bluetooth 모듈을 통한 모바일 앱 데이터 전송
+* 운동강도 단계에 따른 LED 피드백 제어
+* MIT App Inventor 기반 모바일 화면 연동
+* GitHub Pages에서 App Inventor 프로젝트로 이동하는 `index.html` 추가
+
+> 본 프로젝트는 교육 및 포트폴리오 목적의 프로토타입이며, 의료 진단 또는 치료 목적의 의료기기가 아닙니다.
+
+---
+
 본 프로젝트는 PPG 센서를 이용해 사용자의 심박수를 측정하고, 카보넨 공식(Karvonen Formula)을 기반으로 개인 맞춤형 운동강도를 계산하는 웨어러블 헬스케어 프로토타입입니다.
 
 Arduino 마이크로컨트롤러, PPG 심박 센서, Bluetooth 통신 모듈, 모바일 애플리케이션을 연동하여 실시간 심박수 측정과 운동강도 안내 기능을 제공합니다.
